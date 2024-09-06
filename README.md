@@ -1,5 +1,5 @@
 # lightbnb
-LightBnB is a AirBnB kind've site that focuses on the backend, specically the database
+LightBnB is a AirBnB kind've project where it's focuses is on the backend, specically the database.
 
 ## Features
 1. Create Listings
@@ -9,6 +9,9 @@ LightBnB is a AirBnB kind've site that focuses on the backend, specically the da
 
 ## Screenshots
 
+!["Screenshot of Main Page"](https://github.com/xtremeyou/lightbnb/blob/main/docs/Main%20Page.png?raw=true)
+!["Screenshot of listing a new property page"](https://github.com/xtremeyou/lightbnb/blob/main/docs/Create%20Listing.png?raw=true)
+!["Screenshot of search filter page"](https://github.com/xtremeyou/lightbnb/blob/main/docs/Search%20Filter.png?raw=true)
 
 ## Getting Started
 - Create a new repository using this repository as a template.
