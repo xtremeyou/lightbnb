@@ -124,10 +124,10 @@ const getAllReservations = function (guest_id, limit = 10) {
  * @return {Promise<[{}]>}  A promise to the properties.
  */
 const getAllProperties = function (options, limit = 10) {
-  
+
   const queryParams = [];
   let filterQueries = []; //checks when a query needs a where keyword and  also joins the queries together
-  
+
   let queryString = `
     SELECT properties.*, AVG(property_reviews.rating) AS average_rating
     FROM properties
@@ -154,16 +154,16 @@ const getAllProperties = function (options, limit = 10) {
     filterQueries.push(`cost_per_night <= $${queryParams.length}`);
   }
 
-  // Checks if there is an element inside and if so joins it to a where keyword and joins other queries together using and
+  // Checks if there is an element inside and if so joins it to a where keyword and joins other queries together using AND
   if (filterQueries.length > 0) {
     queryString += ` WHERE ${filterQueries.join(' AND ')}`;
   }
-
 
   queryString += `
     GROUP BY properties.id
   `;
 
+  //Lets use store our minmum rating inside our queryString after GROUP
   if (options.minimum_rating) {
     queryParams.push(options.minimum_rating);
     queryString += `
@@ -190,10 +190,20 @@ const getAllProperties = function (options, limit = 10) {
  * @return {Promise<{}>} A promise to the property.
  */
 const addProperty = function (property) {
-  const propertyId = Object.keys(properties).length + 1;
-  property.id = propertyId;
-  properties[propertyId] = property;
-  return Promise.resolve(property);
+  const queryString = `
+  INSERT INTO properties (owner_id, title, description, thumbnail_photo_url, cover_photo_url, cost_per_night, parking_spaces, number_of_bathrooms, number_of_bedrooms, country, street, city, province, post_code)
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+  RETURNING *;
+  `;
+  const values = [property.owner_id, property.title, property.description, property.thumbnail_photo_url, property.cover_photo_url, property.cost_per_night, property.parking_spaces, property.number_of_bathrooms, property.number_of_bedrooms, property.country, property.street, property.city, property.province, property.post_code];
+
+  return pool.query(queryString, values)
+    .then(res => {
+      return res.rows[0];
+    })
+    .catch(err => {
+      return console.log('query error:', err);
+    })
 };
 
 module.exports = {
