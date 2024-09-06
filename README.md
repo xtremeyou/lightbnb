@@ -31,4 +31,4 @@ Timeago
 Nodemon
 
 # ERD
-!["Screenshot of ERD"]()
+!["Screenshot of ERD"](https://github.com/xtremeyou/lightbnb/blob/main/docs/ERD.png?raw=true)
